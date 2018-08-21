@@ -1,11 +1,20 @@
 
 import {IncomingHttpHeaders} from 'http';
 
+import {ClientUnaryCall, ClientReadableStream} from './call';
 import {CallCredentials} from './call-credentials';
+import {CallOptions} from './call-stream';
 import {ChannelCredentials} from './channel-credentials';
 import {Client} from './client';
 import {Status} from './constants';
-import {loadPackageDefinition, makeClientConstructor} from './make-client';
+import {
+  loadPackageDefinition,
+  makeClientConstructor,
+  ServiceDefinition,
+  MethodDefinition,
+  Serialize,
+  Deserialize,
+} from './make-client';
 import {Metadata} from './metadata';
 
 interface IndexedObject {
@@ -31,6 +40,19 @@ export interface OAuth2Client {
                                       Authorization: string
                                     }) => void) => void;
 }
+
+// srubin exports
+export {
+  ServiceDefinition,
+  MethodDefinition,
+  ChannelCredentials,
+  Serialize as serialize,
+  Deserialize as deserialize,
+  CallOptions,
+  ClientUnaryCall,
+  ClientReadableStream,
+}
+// end srubin exports
 
 /**** Client Credentials ****/
 

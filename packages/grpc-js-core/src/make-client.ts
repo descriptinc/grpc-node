@@ -25,12 +25,12 @@ export interface MethodDefinition<RequestType, ResponseType> {
   originalName?: string;
 }
 
-export interface ServiceDefinition {
-  [index: string]: MethodDefinition<object, object>;
+export type ServiceDefinition<ImplementationType> = {
+  readonly [I in keyof ImplementationType]: MethodDefinition<any, any>;
 }
 
 export interface PackageDefinition {
-  [index: string]: ServiceDefinition;
+  [index: string]: ServiceDefinition<any>;
 }
 
 function getDefaultValues<T>(metadata?: Metadata, options?: T):
@@ -57,7 +57,7 @@ export interface ServiceClient extends Client {
 export interface ServiceClientConstructor {
   new(address: string, credentials: ChannelCredentials,
       options?: Partial<ChannelOptions>): ServiceClient;
-  service: ServiceDefinition;
+  service: ServiceDefinition<any>;
 }
 
 /**
@@ -75,14 +75,14 @@ export interface ServiceClientConstructor {
  *     {@link grpc.Client}, and has the same arguments as that constructor.
  */
 export function makeClientConstructor(
-    methods: ServiceDefinition, serviceName: string,
+    methods: ServiceDefinition<any>, serviceName: string,
     classOptions?: {}): ServiceClientConstructor {
   if (!classOptions) {
     classOptions = {};
   }
 
   class ServiceClientImpl extends Client implements ServiceClient {
-    static service: ServiceDefinition;
+    static service: ServiceDefinition<any>;
     [methodName: string]: Function;
   }
 
