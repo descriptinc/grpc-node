@@ -91,7 +91,7 @@
       'GPR_BACKWARDS_COMPATIBILITY_MODE',
       'GRPC_ARES=0',
       'GRPC_UV',
-      'GRPC_NODE_VERSION="1.15.0-dev"'
+      'GRPC_NODE_VERSION="1.17.0-dev"'
     ],
     'conditions': [
       ['grpc_gcov=="true"', {
@@ -116,11 +116,6 @@
       ['grpc_alpine=="true"', {
         'defines': [
           'GPR_MUSL_LIBC_COMPAT'
-        ]
-      }],
-      ['OS!="win" and runtime=="electron"', {
-        "defines": [
-          'OPENSSL_NO_THREADS'
         ]
       }],
       # This is the condition for using boringssl
@@ -227,6 +222,9 @@
           'type': 'static_library',
           'cflags': [
             '-Wno-implicit-fallthrough'
+          ],
+          'defines': [
+            '_XOPEN_SOURCE=700'
           ],
           'dependencies': [
           ],
@@ -648,6 +646,7 @@
         'deps/grpc/src/core/lib/http/format_request.cc',
         'deps/grpc/src/core/lib/http/httpcli.cc',
         'deps/grpc/src/core/lib/http/parser.cc',
+        'deps/grpc/src/core/lib/iomgr/buffer_list.cc',
         'deps/grpc/src/core/lib/iomgr/call_combiner.cc',
         'deps/grpc/src/core/lib/iomgr/combiner.cc',
         'deps/grpc/src/core/lib/iomgr/endpoint.cc',
@@ -657,7 +656,6 @@
         'deps/grpc/src/core/lib/iomgr/error.cc',
         'deps/grpc/src/core/lib/iomgr/ev_epoll1_linux.cc',
         'deps/grpc/src/core/lib/iomgr/ev_epollex_linux.cc',
-        'deps/grpc/src/core/lib/iomgr/ev_epollsig_linux.cc',
         'deps/grpc/src/core/lib/iomgr/ev_poll_posix.cc',
         'deps/grpc/src/core/lib/iomgr/ev_posix.cc',
         'deps/grpc/src/core/lib/iomgr/ev_windows.cc',
@@ -668,6 +666,7 @@
         'deps/grpc/src/core/lib/iomgr/gethostname_fallback.cc',
         'deps/grpc/src/core/lib/iomgr/gethostname_host_name_max.cc',
         'deps/grpc/src/core/lib/iomgr/gethostname_sysconf.cc',
+        'deps/grpc/src/core/lib/iomgr/internal_errqueue.cc',
         'deps/grpc/src/core/lib/iomgr/iocp_windows.cc',
         'deps/grpc/src/core/lib/iomgr/iomgr.cc',
         'deps/grpc/src/core/lib/iomgr/iomgr_custom.cc',
@@ -913,10 +912,14 @@
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/grpclb/grpclb_channel_secure.cc',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/grpclb/grpclb_client_stats.cc',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/grpclb/load_balancer_api.cc',
+        'deps/grpc/src/core/ext/filters/client_channel/resolver/fake/fake_resolver.cc',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/grpclb/proto/grpc/lb/v1/google/protobuf/duration.pb.c',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/grpclb/proto/grpc/lb/v1/google/protobuf/timestamp.pb.c',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/grpclb/proto/grpc/lb/v1/load_balancer.pb.c',
-        'deps/grpc/src/core/ext/filters/client_channel/resolver/fake/fake_resolver.cc',
+        'deps/grpc/src/core/ext/filters/client_channel/lb_policy/xds/xds.cc',
+        'deps/grpc/src/core/ext/filters/client_channel/lb_policy/xds/xds_channel_secure.cc',
+        'deps/grpc/src/core/ext/filters/client_channel/lb_policy/xds/xds_client_stats.cc',
+        'deps/grpc/src/core/ext/filters/client_channel/lb_policy/xds/xds_load_balancer_api.cc',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/pick_first/pick_first.cc',
         'deps/grpc/src/core/ext/filters/client_channel/lb_policy/round_robin/round_robin.cc',
         'deps/grpc/src/core/ext/filters/client_channel/resolver/dns/c_ares/dns_resolver_ares.cc',
@@ -929,7 +932,7 @@
         'deps/grpc/src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_wrapper_windows.cc',
         'deps/grpc/src/core/ext/filters/client_channel/resolver/dns/native/dns_resolver.cc',
         'deps/grpc/src/core/ext/filters/client_channel/resolver/sockaddr/sockaddr_resolver.cc',
-        'deps/grpc/src/cpp/ext/filters/census/grpc_context.cc',
+        'deps/grpc/src/core/ext/filters/census/grpc_context.cc',
         'deps/grpc/src/core/ext/filters/max_age/max_age_filter.cc',
         'deps/grpc/src/core/ext/filters/message_size/message_size_filter.cc',
         'deps/grpc/src/core/ext/filters/http/client_authority_filter.cc',
