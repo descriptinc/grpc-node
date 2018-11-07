@@ -4,10 +4,9 @@ import {ClientUnaryCall, ClientReadableStream} from './call';
 import {CallCredentials} from './call-credentials';
 import {Channel} from './channel';
 import {ChannelCredentials} from './channel-credentials';
-import {Client} from './client';
+import {Client, CallOptions} from './client';
 import {LogVerbosity, Status} from './constants';
 import * as logging from './logging';
-import {CallStreamOptions} from './call-stream';
 import {
   loadPackageDefinition,
   makeClientConstructor,
@@ -56,7 +55,7 @@ export {
   ChannelCredentials,
   Serialize as serialize,
   Deserialize as deserialize,
-  CallStreamOptions,
+  CallOptions,
   ClientUnaryCall,
   ClientReadableStream,
 }
